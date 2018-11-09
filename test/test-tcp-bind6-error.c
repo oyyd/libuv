@@ -173,10 +173,15 @@ TEST_IMPL(tcp_bind6_error_my) {
   ASSERT(r == 0);
   r = uv_tcp_bind(&server6, (const struct sockaddr*) &addr6, UV_TCP_IPV6ONLY);
   ASSERT(r == 0);
+  r = uv_listen((uv_stream_t*)&server6, 128, NULL);
+  ASSERT(r == 0);
   r = uv_tcp_init(uv_default_loop(), &server4);
   ASSERT(r == 0);
   r = uv_tcp_bind(&server4, (const struct sockaddr*) &addr4, 0);
   ASSERT(r == 0);
+  r = uv_listen((uv_stream_t*)&server4, 128, NULL);
+  ASSERT(r == 0);
+
 
   MAKE_VALGRIND_HAPPY();
   return 0;
